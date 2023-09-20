@@ -3,19 +3,29 @@ import { useState } from "react";
 function CreateAmount({ onUpdate }) {
   const [amount, setAmount] = useState(0);
   const [sign, setSign] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
+
+  function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const date = today.getDate();
+    return `${month}/${date}/${year}`;
+  }
 
   const handleChange = (event) => {
     setAmount(+event.target.value);
+    setCurrentDate(getDate());
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (sign === "plus") {
-      onUpdate(amount, sign);
+      onUpdate(amount, sign, currentDate);
       setAmount(0);
     }
     if (sign === "minus") {
-      onUpdate(amount, sign);
+      onUpdate(amount, sign, currentDate);
       setAmount(0);
     }
   };
