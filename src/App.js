@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AmountList from "./comps/AmountList";
 import CreateAmount from "./comps/CreateAmount";
+import Icons from "./comps/Icons";
 
 function App() {
   const [balance, setBalance] = useState(0);
@@ -26,8 +27,11 @@ function App() {
   };
   return (
     <div>
-      <h2>Balance:</h2>
+      <h1>Balance:</h1>
       <h3>{balance} $</h3>
+      <div>
+        <Icons />
+      </div>
       <CreateAmount onUpdate={updateAmount}></CreateAmount>
       <hr></hr>
       <div>

@@ -34,7 +34,7 @@ function CreateAmount({ onUpdate }) {
     <div className="amount-create">
       <h3>Input amount: </h3>
       <form onSubmit={handleSubmit}>
-        <button className="plus-button" onClick={() => setSign("plus")}>
+        <button className="" onClick={() => setSign("plus")}>
           Plus
         </button>
         <input className="input" value={amount} onChange={handleChange} />
