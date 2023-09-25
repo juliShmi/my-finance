@@ -1,11 +1,20 @@
 import { useState } from "react";
 import AmountList from "./comps/AmountList";
 import CreateAmount from "./comps/CreateAmount";
-import Icons from "./comps/Icons";
+import CategoriesList from "./comps/CategoriesList";
 
 function App() {
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
+
+  const [categories, setCategories] = useState([
+    { name: "house", amount: 0 },
+    { name: "pets", amount: 40 },
+    { name: "clothes", amount: 10 },
+    { name: "food", amount: 20 },
+  ]);
+
+  const [category, setCategory] = useState([]);
 
   const updateAmount = (amount, sign, currentDate) => {
     const updatedTransactions = [
@@ -30,8 +39,9 @@ function App() {
       <h1>Balance:</h1>
       <h3>{balance} $</h3>
       <div>
-        <Icons />
+        <CategoriesList categories={categories} />
       </div>
+      <hr></hr>
       <CreateAmount onUpdate={updateAmount}></CreateAmount>
       <hr></hr>
       <div>

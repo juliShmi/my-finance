@@ -2,7 +2,7 @@ function AmountList({ transactions }) {
   const renderedTransactions = transactions.map((transaction) => {
     return (
       <div key={transaction.id}>
-        {transaction.currentDate} | {transaction.sign} {transaction.amount}$
+        {transaction.currentDate} | {transaction.amount}$
       </div>
     );
   });
