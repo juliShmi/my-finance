@@ -7,43 +7,33 @@ function App() {
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
 
-  const [categories, setCategories] = useState([
-    { name: "house", amount: 0 },
-    { name: "pets", amount: 40 },
-    { name: "clothes", amount: 10 },
-    { name: "food", amount: 20 },
-  ]);
+  const categories = ["house", "pets", "clothes", "food"];
 
-  const [category, setCategory] = useState([]);
-
-  const updateAmount = (amount, sign, currentDate) => {
+  const createAmount = (amount, currentDate, category) => {
     const updatedTransactions = [
       ...transactions,
       {
         id: Math.round(Math.random() * 9999),
         currentDate,
         amount,
-        sign,
+        category,
       },
     ];
     setTransactions(updatedTransactions);
-
-    if (sign === "plus") {
-      setBalance(balance + amount);
-    } else {
-      setBalance(balance - amount);
-    }
+    setBalance(balance - amount);
   };
+
   return (
     <div>
       <h1>Balance:</h1>
       <h3>{balance} $</h3>
       <div>
-        <CategoriesList categories={categories} />
+        <CategoriesList
+          categories={categories}
+          transactions={transactions}
+          onCreate={createAmount}
+        />
       </div>
-      <hr></hr>
-      <CreateAmount onUpdate={updateAmount}></CreateAmount>
-      <hr></hr>
       <div>
         <AmountList transactions={transactions} />
       </div>

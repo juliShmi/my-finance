@@ -4,32 +4,45 @@ import { BiSolidTShirt } from "react-icons/bi";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { useState } from "react";
 import { IconContext } from "react-icons";
+import CreateAmount from "./CreateAmount";
 
-export default function Category({ category }) {
+export default function Category({ category, transactions, onCreate }) {
   const style = { color: "rgb(34 211 238)", size: 70 };
-  const [amount, setAmount] = useState(0);
+  const [showCreateAmount, setShowCreateAmount] = useState(false);
 
-  const mapping = [
-    { name: "house", component: <BsFillHouseHeartFill /> },
-    { name: "pets", component: <FaCat /> },
-    { name: "clothes", component: <BiSolidTShirt /> },
-    { name: "food", component: <IoFastFoodOutline /> },
-  ];
+  const categoryAmount = transactions
+    .filter((transaction) => transaction.category == category)
+    .map((transaction) => transaction.amount)
+    .reduce((a, b) => a + b, 0);
 
-  const icon = mapping.find((obj) => {
-    return obj.name === category.name;
-  });
+  const handleClick = (category) => {
+    setShowCreateAmount(true);
+  };
 
+  let content;
+  if (showCreateAmount) {
+    content = <CreateAmount category={category} onCreate={onCreate} />;
+  }
+
+  const mapping = {
+    house: <BsFillHouseHeartFill />,
+    pets: <FaCat />,
+    clothes: <BiSolidTShirt />,
+    food: <IoFastFoodOutline />,
+  };
   return (
-    <div className="category">
-      <div className="px-16 py-16">
-        <div>
-          <IconContext.Provider value={style}>
-            {icon.component}
-          </IconContext.Provider>
+    <div>
+      <div className="category" onClick={() => handleClick(category)}>
+        <div className="px-16 py-16">
+          <div>
+            <IconContext.Provider value={style}>
+              {mapping[category]}
+            </IconContext.Provider>
+          </div>
+          <div>{categoryAmount} $</div>
         </div>
-        <div>{category.amount} $</div>
       </div>
+      {content}
     </div>
   );
 }

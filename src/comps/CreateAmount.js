@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-function CreateAmount({ onUpdate }) {
+function CreateAmount({ category, onCreate }) {
   const [amount, setAmount] = useState(0);
-  const [sign, setSign] = useState("");
   const [currentDate, setCurrentDate] = useState("");
 
   function getDate() {
@@ -20,27 +19,15 @@ function CreateAmount({ onUpdate }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (sign === "plus") {
-      onUpdate(amount, sign, currentDate);
-      setAmount(0);
-    }
-    if (sign === "minus") {
-      onUpdate(amount, sign, currentDate);
-      setAmount(0);
-    }
+    onCreate(amount, currentDate, category);
+    setAmount(0);
   };
 
   return (
-    <div className="amount-create">
+    <div className="amount-create" onSubmit={handleSubmit}>
       <h3>Input amount: </h3>
-      <form onSubmit={handleSubmit}>
-        <button className="" onClick={() => setSign("plus")}>
-          Plus
-        </button>
+      <form>
         <input className="input" value={amount} onChange={handleChange} />
-        <button className="minus-button" onClick={() => setSign("minus")}>
-          Minus
-        </button>
       </form>
     </div>
   );
